@@ -2,20 +2,76 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
+import './signin.scss';
 import { SignUpLink } from '../SignUp';
 import { PasswordForgetLink } from '../PasswordForget';
 import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 
+const bg = require('../../assests/images/nature/001.jpg');
+
 const SignInPage = () => (
-  <div>
-    <h1>SignIn</h1>
-    <SignInForm />
-    <SignInGoogle />
-    <SignInFacebook />
-    <SignInTwitter />
-    <PasswordForgetLink />
-    <SignUpLink />
+  // <div>
+  //   <h1>SignIn</h1>
+  //   <SignInForm />
+  //   <SignInGoogle />
+  //   <SignInFacebook />
+  //   <SignInTwitter />
+  //   <PasswordForgetLink />
+  //   <SignUpLink />
+  // </div>
+
+  <div className="container" style={{ backgroundImage: `url(${bg})` }}>
+    <div className="d-flex justify-content-center h-100">
+      <div className="card">
+        <div className="card-header">
+          <h3>Sign In</h3>
+          <div className="d-flex justify-content-end social_icon">
+            {/* <span><i className="fab fa-facebook-square"></i></span> */}
+            {/* <span><i className="fab fa-google-plus-square"></i></span> */}
+            {/* <span><i className="fab fa-twitter-square"></i></span> */}
+            <SignInFacebook />
+            <SignInGoogle />
+            <SignInTwitter />
+          </div>
+        </div>
+        <div className="card-body">
+          <SignInForm />
+          {/* <form>
+            <div className="input-group form-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text"><i className="fas fa-user"></i></span>
+              </div>
+              <input type="text" className="form-control" placeholder="username" />
+
+            </div>
+            <div className="input-group form-group">
+              <div className="input-group-prepend">
+                <span className="input-group-text"><i className="fas fa-key"></i></span>
+              </div>
+              <input type="password" className="form-control" placeholder="password" />
+            </div>
+            <div className="row align-items-center remember">
+              <input type="checkbox" />
+              Remember Me
+            </div>
+            <div className="form-group">
+              <input type="submit" value="Login" className="btn float-right login_btn" />
+            </div>
+          </form> */}
+        </div>
+        <div className="card-footer">
+          <SignUpLink />
+          {/* <div className="d-flex justify-content-center links">
+            Don't have an account?<a href="#">Sign Up</a>
+          </div> */}
+          {/* <div className="d-flex justify-content-center">
+            <a href="#">Forgot your password?</a>
+          </div> */}
+          <PasswordForgetLink />
+        </div>
+      </div>
+    </div>
   </div>
 );
 
@@ -68,25 +124,54 @@ class SignInFormBase extends Component {
     const isInvalid = password === '' || email === '';
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
-          name="email"
-          value={email}
-          onChange={this.onChange}
-          type="text"
-          placeholder="Email Address"
-        />
-        <input
-          name="password"
-          value={password}
-          onChange={this.onChange}
-          type="password"
-          placeholder="Password"
-        />
-        <button disabled={isInvalid} type="submit">
-          Sign In
-        </button>
+      // <form onSubmit={this.onSubmit}>
+      //   <input
+      //     name="email"
+      //     value={email}
+      //     onChange={this.onChange}
+      //     type="text"
+      //     placeholder="Email Address"
+      //   />
+      //   <input
+      //     name="password"
+      //     value={password}
+      //     onChange={this.onChange}
+      //     type="password"
+      //     placeholder="Password"
+      //   />
+      //   <button disabled={isInvalid} type="submit">
+      //     Sign In
+      //   </button>
 
+      //   {error && <p>{error.message}</p>}
+      // </form>
+
+      <form onSubmit={this.onSubmit}>
+        <div className="input-group form-group">
+          <div className="input-group-prepend">
+            <span className="input-group-text"><i className="fas fa-user"></i></span>
+          </div>
+          {/* <input type="text" className="form-control" placeholder="username" /> */}
+          <input name="email" className="form-control" value={email} onChange={this.onChange} type="text" placeholder="Email Address" />
+
+        </div>
+        <div className="input-group form-group">
+          <div className="input-group-prepend">
+            <span className="input-group-text"><i className="fas fa-key"></i></span>
+          </div>
+          {/* <input type="password" className="form-control" placeholder="password" /> */}
+          <input name="password" className="form-control" value={password} onChange={this.onChange} type="password" placeholder="Password" />
+        </div>
+        <div className="row align-items-center remember">
+          <input type="checkbox" />
+          Remember Me
+        </div>
+        <div className="form-group">
+          {/* <input type="submit" value="Login" className="btn float-right login_btn" /> */}
+          <button disabled={isInvalid} type="submit" className="btn float-right login_btn">
+            Sign In
+         </button>
+        </div>
         {error && <p>{error.message}</p>}
       </form>
     );
@@ -130,11 +215,15 @@ class SignInGoogleBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Google</button>
+      // <form onSubmit={this.onSubmit}>
+      //   <button type="submit">Sign In with Google</button>
 
+      //   {error && <p>{error.message}</p>}
+      // </form>
+      <React.Fragment>
+        <span onClick={this.onSubmit}><i className="fab fa-google-plus-square"></i></span>
         {error && <p>{error.message}</p>}
-      </form>
+      </React.Fragment>
     );
   }
 }
@@ -176,11 +265,15 @@ class SignInFacebookBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Facebook</button>
+      // <form onSubmit={this.onSubmit}>
+      //   <button type="submit">Sign In with Facebook</button>
 
+      //   {error && <p>{error.message}</p>}
+      // </form>
+      <React.Fragment>
+        <span onClick={this.onSubmit}><i className="fab fa-facebook-square"></i></span>
         {error && <p>{error.message}</p>}
-      </form>
+      </React.Fragment>
     );
   }
 }
@@ -222,11 +315,15 @@ class SignInTwitterBase extends Component {
     const { error } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <button type="submit">Sign In with Twitter</button>
+      // <form onSubmit={this.onSubmit}>
+      //   <button type="submit">Sign In with Twitter</button>
 
+      //   {error && <p>{error.message}</p>}
+      // </form>
+      <React.Fragment>
+        <span onClick={this.onSubmit}><i className="fab fa-twitter-square"></i></span>
         {error && <p>{error.message}</p>}
-      </form>
+      </React.Fragment>
     );
   }
 }
